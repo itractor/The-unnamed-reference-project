@@ -19,7 +19,7 @@ public class Projectc44Resource {
     public EmployeeReferences retrieveEmployeeReferences() {
         EmployeeReferences employeeReferences = new EmployeeReferences();
         List<String> list = new ArrayList<>();
-        list.add("dddd");
+        list.add("TEST");
         employeeReferences.setEntries(list);
         return employeeReferences;
     }
