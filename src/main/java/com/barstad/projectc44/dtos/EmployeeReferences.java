@@ -1,4 +1,4 @@
-package com.barstad.projectc44.dto;
+package com.barstad.projectc44.dtos;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,6 @@
 package com.barstad.projectc44.Resources;
 
-import com.barstad.projectc44.dto.EmployeeReferences;
+import com.barstad.projectc44.dtos.EmployeeReferences;
 import org.springframework.stereotype.Component;
 
 import javax.ws.rs.GET;
