@@ -1,6 +1,6 @@
 package com.barstad.projectc44.daos;
 
-import com.barstad.projectc44.Entities.UserProfileEntity;
+import com.barstad.projectc44.Models.UserProfileEntity;
 
 public interface Database {
     public void openConnection();

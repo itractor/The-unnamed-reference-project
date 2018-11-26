@@ -1,6 +1,6 @@
 package com.barstad.projectc44.daos;
 
-import com.barstad.projectc44.Entities.UserProfileEntity;
+import com.barstad.projectc44.Models.UserProfileEntity;
 import com.barstad.projectc44.utils.HibernateUtils;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

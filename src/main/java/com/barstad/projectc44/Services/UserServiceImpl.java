@@ -1,32 +1,42 @@
 package com.barstad.projectc44.Services;
 
-import com.barstad.projectc44.Entities.UserProfileEntity;
-import com.barstad.projectc44.daos.Database;
-import com.barstad.projectc44.dtos.UserProfileDto;
-import org.springframework.beans.BeanUtils;
+import com.barstad.projectc44.Models.Role;
+import com.barstad.projectc44.Models.User;
+import com.barstad.projectc44.Repositories.RoleRepository;
+import com.barstad.projectc44.Repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
 
-public class UserServiceImpl implements UserService {
-    Database database;
-    public UserProfileDto saveUser(UserProfileDto userDto) {
+import java.util.Arrays;
+import java.util.HashSet;
 
-        UserProfileDto returnValue = null;
+@Service("userService")
+public class UserServiceImpl implements UserService{
 
-        UserProfileEntity userEntity = new UserProfileEntity();
-        BeanUtils.copyProperties(userDto, userEntity);
+    private UserRepository userRepository;
+    private RoleRepository roleRepository;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-        // Connect to database
-        try {
-            this.database.openConnection();
-            UserProfileEntity storedUserEntity = this.database.saveUserProfile(userEntity);
-            if(storedUserEntity != null && storedUserEntity.getId()>0)
-            {
-                returnValue = new UserProfileDto();
-                BeanUtils.copyProperties(storedUserEntity, returnValue);
-            }
-        }  finally {
-            this.database.closeConnection();
-        }
-
-        return returnValue;
+    @Autowired
+    public UserServiceImpl(UserRepository userRepository,
+                       RoleRepository roleRepository,
+                       BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
+
+    public User findUserByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    public void saveUser(User user) {
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setActive(1);
+        Role userRole = roleRepository.findByRole("ADMIN");
+        user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
+        userRepository.save(user);
+    }
+
 }

@@ -1,4 +1,4 @@
-package com.barstad.projectc44.Entities;
+package com.barstad.projectc44.Models;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
